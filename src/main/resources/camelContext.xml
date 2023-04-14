@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+	<import resource="beans.xml" />
+	<camelContext id="log-masking-context" logMask="true"
+		xmlns="http://camel.apache.org/schema/spring">
+		<route>
+			<from uri="timer://clock?period=60000&amp;delay=10000" />
+			<!-- <setBody>
+				<simple>"key=value, sensitiveNumber=9123452, customKey=foo,
+					Mypassword=12345,
+					Mypasshrase=NewEntry, "oneMore"="thisOnly""
+				</simple>
+			</setBody> -->
+			<setBody> <simple> { "key": "value", "sensitiveNumber": "9123452", 
+				"customKey": "foo", "Mypassword": "12345", "Mypasshrase": "NewEntry", "oneMore": 
+				"thisOnly" } </simple> </setBody>
+			<!-- <to uri="log:foo?logMask=true" /> -->
+			<log message="${body}"/>
+		</route>
+	</camelContext>
+
+</beans>
