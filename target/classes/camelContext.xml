@@ -9,17 +9,18 @@
 		xmlns="http://camel.apache.org/schema/spring">
 		<route>
 			<from uri="timer://clock?period=60000&amp;delay=10000" />
-			<!-- <setBody>
-				<simple>"key=value, sensitiveNumber=9123452, customKey=foo,
-					Mypassword=12345,
-					Mypasshrase=NewEntry, "oneMore"="thisOnly""
+			<!-- <setBody> <simple>"key=value, sensitiveNumber=9123452, customKey=foo, 
+				Mypassword=12345, Mypasshrase=NewEntry, "oneMore"="thisOnly"" </simple> </setBody> -->
+			<setBody>
+				<simple> { "key": "value", "sensitiveNumber": "9123452",
+					"customKey": "foo", "Mypassword": "12345", "Mypasshrase":
+					"NewEntry", "oneMore":
+					"thisOnly", "tryThis":{
+					"customKey": "fire"} }
 				</simple>
-			</setBody> -->
-			<setBody> <simple> { "key": "value", "sensitiveNumber": "9123452", 
-				"customKey": "foo", "Mypassword": "12345", "Mypasshrase": "NewEntry", "oneMore": 
-				"thisOnly" } </simple> </setBody>
+			</setBody>
 			<!-- <to uri="log:foo?logMask=true" /> -->
-			<log message="${body}"/>
+			<log message="${body}" />
 		</route>
 	</camelContext>
 
